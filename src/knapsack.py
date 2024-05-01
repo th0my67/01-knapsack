@@ -1,4 +1,5 @@
 import os
+from abc import abstractmethod, ABC
 
 class KnapsackInstance:
     '''
@@ -30,33 +31,37 @@ class KnapsackInstance:
     def __repr__(self):
         return f"{__class__.__name__}(W={self.W}, V={self.V}, C={self.C})"
 
-class KnapsackSolver:
+
+class KnapsackSolver(ABC):
     '''
     '''
     
     def __init__(self, instance):
         self._inst = instance
         # 0-1 decision variables
-        self._X: list[int] = [0] * self.instance.size
+        self._X: list[int] = [0] * self._inst.size
 
+    @abstractmethod
     def solve(self):
         '''
         Solves the loaded instance and returns the assignment to the decision
         variables
         '''
-        ...
+        pass
         
+    @abstractmethod
     def volume(self, X: list[int]) -> int:
         '''
         Computes the total volume of the objects contained in the solution X
         '''
-        ...
+        pass
     
+    @abstractmethod
     def value(self, X: list[int]) -> int:
         '''
         Computes the total value of the objects contained in the solution X
         '''
-        ...
+        pass
         
 
 try:
