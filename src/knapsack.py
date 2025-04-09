@@ -20,11 +20,19 @@ class KnapsackInstance:
         V: list[int] = []
         C: int = 0
 
+        lines = string.split('\n')
+        for line in lines:
+            w, v = line.split(' ')
+            W.append(w)
+            V.append(v)
+
         return KnapsackInstance(W, V, C)
 
     @staticmethod
-    def load_instance_data(instance_name: str) -> str:
-        return ''
+    def load_instance_data(instance_name: str) -> str: 
+        with open(instance_name) as file:
+            file_lines = file.readlines()
+        return "\n".join(file_lines)
 
     @staticmethod
     def test_instance() -> str:
@@ -91,3 +99,5 @@ try:
     doctest.testmod()
 except:
     print("Unable to load doctests")
+
+KnapsackInstance.load_instance_data(r'src/test_instances/toy-instance')
