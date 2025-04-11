@@ -1,5 +1,8 @@
 # Exercice https://courses.21-learning.com/runestone/books/published/oci-2224-donc/classic-problems/01-knapsack-short.html#force-brute
 
+from itertools import product
+from more_itertools import dotproduct
+
 from knapsack import KnapsackInstance, KnapsackSolver
 
 class BruteforceKnapsackSolver(KnapsackSolver):
@@ -18,13 +21,24 @@ class BruteforceKnapsackSolver(KnapsackSolver):
 
     """
     
-    def __init__(self, instance) -> None:
+    def __init__(self, instance:KnapsackInstance) -> None:
         # TODO: write the constructor by calling the parent class constructor
-        ...
+        super.__init__()
 
     
     def solve(self) -> tuple[int, ...]:
         # solve by brute force
-        sol = (0,)
+
+        possibilities = product((0,1), repeat=len(self._inst.W))
+        gain_possibility_tuples = ((dotproduct(possibility, self._inst.V), possibility) for possibility in possibilities if dotproduct(possibility, self._inst.W) <= self._inst.C)
         
-        return sol
+        def get_max_gain_possibility(gain_possibility_tuples:tuple[int, tuple[int, ...]]) -> tuple[int, ...]:
+            max_gain = 0
+            best_possibility = None
+            for gain, possibility in gain_possibility_tuples:
+                if gain > max_gain:
+                    max_gain = gain
+                    best_possibility = possibility
+            return best_possibility
+
+        return get_max_gain_possibility(gain_possibility_tuples)
