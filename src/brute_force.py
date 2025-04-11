@@ -23,7 +23,7 @@ class BruteforceKnapsackSolver(KnapsackSolver):
     
     def __init__(self, instance:KnapsackInstance) -> None:
         # TODO: write the constructor by calling the parent class constructor
-        super.__init__()
+        super().__init__(instance)
 
     
     def solve(self) -> tuple[int, ...]:
@@ -31,14 +31,12 @@ class BruteforceKnapsackSolver(KnapsackSolver):
 
         possibilities = product((0,1), repeat=len(self._inst.W))
         gain_possibility_tuples = ((dotproduct(possibility, self._inst.V), possibility) for possibility in possibilities if dotproduct(possibility, self._inst.W) <= self._inst.C)
-        
-        def get_max_gain_possibility(gain_possibility_tuples:tuple[int, tuple[int, ...]]) -> tuple[int, ...]:
-            max_gain = 0
-            best_possibility = None
-            for gain, possibility in gain_possibility_tuples:
-                if gain > max_gain:
-                    max_gain = gain
-                    best_possibility = possibility
-            return best_possibility
 
-        return get_max_gain_possibility(gain_possibility_tuples)
+        return max(gain_possibility_tuples, key=lambda x: x[0], default=(0, None))[1]
+
+try:
+    import doctest
+
+    doctest.testmod()
+except:
+    print("Unable to load doctests")

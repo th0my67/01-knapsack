@@ -22,9 +22,11 @@ class KnapsackInstance:
 
         lines = string.split('\n')
 
+        C = int(lines[0][1])
+
         Type = float if '.' in string or ',' in string else int
 
-        for line in lines:
+        for line in lines[1:]:
             w, v = line.split(' ')
             W.append(Type(w))
             V.append(Type(v))
@@ -71,7 +73,7 @@ class KnapsackSolver:
     84
     """
 
-    def __init__(self, instance) -> None:
+    def __init__(self, instance:KnapsackInstance) -> None:
         self._inst = instance
         # 0-1 decision variables
         self._X: list[int] = [0] * self._inst.size
