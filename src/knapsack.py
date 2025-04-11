@@ -21,10 +21,13 @@ class KnapsackInstance:
         C: int = 0
 
         lines = string.split('\n')
+
+        Type = float if '.' in string or ',' in string else int
+
         for line in lines:
             w, v = line.split(' ')
-            W.append(w)
-            V.append(v)
+            W.append(Type(w))
+            V.append(Type(v))
 
         return KnapsackInstance(W, V, C)
 
@@ -32,7 +35,7 @@ class KnapsackInstance:
     def load_instance_data(instance_name: str) -> str: 
         with open(instance_name) as file:
             file_lines = file.readlines()
-        return "\n".join(file_lines)
+        return "".join(file_lines)
 
     @staticmethod
     def test_instance() -> str:
@@ -99,5 +102,3 @@ try:
     doctest.testmod()
 except:
     print("Unable to load doctests")
-
-KnapsackInstance.load_instance_data(r'src/test_instances/toy-instance')
