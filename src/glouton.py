@@ -1,8 +1,5 @@
 # Exercice https://courses.21-learning.com/runestone/books/published/oci-2224-donc/classic-problems/01-knapsack-short.html#force-brute
 
-from itertools import product
-from more_itertools import dotproduct
-
 from knapsack import KnapsackInstance, KnapsackSolver
 
 class GloutonKnapsackSolver(KnapsackSolver):
